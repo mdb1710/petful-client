@@ -70,8 +70,71 @@ class DogSearch extends Component {
 
     }
 
+    /*
+                    {peek(this.state.dogQueue) && displaysDogs(this.state.dogQueue)}
+                    {peek(this.state.dogQueue) && this.adoptedDog(this.state.dogQueue)}
+
+                     function displaysDogs(q) {
+            let currNode = q.first;
+            let html = []
+            while (currNode !== undefined) {
+                 
+                    html.push(
+                        <li key={currNode.data.id}>
+                            <img src={currNode.data.imageURL} alt="dog-pic" />
+                            <p>{currNode.data.name}</p>
+                            <p>{currNode.data.breed}</p>
+                            <p>{currNode.data.story}</p>
+                            <p>{currNode.data.adopted}</p>
+                        </li>
+                    )
+                
+
+                currNode = currNode.next
+            }
+            return html;
+        }
+
+
+
+    */
+
     
     render() {
+
+        const dogList = this.state.dogs.map(dog => {
+            if(!dog.adopted){
+                return(
+                
+                    <li key={dog.id}>
+                                <img src={dog.imageURL} alt="dog-pic" />
+                                <p>{dog.name}</p>
+                                <p>{dog.breed}</p>
+                                <p>{dog.story}</p>
+                                
+                                <button value={dog.id} >Adopt</button>
+                    </li>           
+                )
+            } else {
+                return(
+                
+                    <li key={dog.id}>
+                                <img src={dog.imageURL} alt="dog-pic" />
+                                <p>{dog.name}</p>
+                                <p>{dog.breed}</p>
+                                <p>{dog.story}</p>
+                                <p>{dog.adopted}</p>
+                                
+                    </li>           
+                )
+            }
+        })
+
+        console.log(dogList);
+
+        // const availableDog = this.state.dogs.map(dog => {
+        //     while(dog.ad)
+        // })
 
         function peek(queue) {
             return queue.first;
@@ -93,34 +156,20 @@ class DogSearch extends Component {
         }
 
 
-        function displaysDogs(q) {
-            let currNode = q.first;
-            let html = []
-            while (currNode !== undefined) {
-                 
-                    html.push(
-                        <li key={currNode.data.id}>
-                            <img src={currNode.data.imageURL} alt="dog-pic" />
-                            <p>{currNode.data.name}</p>
-                            <p>{currNode.data.breed}</p>
-                            <p>{currNode.data.story}</p>
-                            <p>{currNode.data.adopted}</p>
-                        </li>
-                    )
-                
+        
 
-                currNode = currNode.next
-            }
-            return html;
-        }
+        
 
        
         return (
             <div className={`dog-results ${this.props.toggle ? 'hidden' : ''}`}>
+               <div className='dog-in-queue'>
+
+               </div>
            
                 <ul>
-                {peek(this.state.dogQueue) && this.adoptedDog(this.state.dogQueue)}
-                    {peek(this.state.dogQueue) && displaysDogs(this.state.dogQueue)}
+                
+                    {dogList}
                 </ul>
             </div>
         )
