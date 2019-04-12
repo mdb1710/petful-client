@@ -1,26 +1,58 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Route } from 'react-router-dom';
+// import logo from './logo.svg';
+// import './App.css';
+
+import HomePage from './components/HomePage';
+import AdoptionSearch from './components/AdoptionSearch';
+import AdoptionContext from './adoption-context/AdoptionContext';
 
 class App extends Component {
+
+  constructor(props){
+    super(props)
+    this.state = {
+      cats: [],
+      dogs: [],
+      adopted: false,
+      taken: false,
+      toggleCatSearch: () => {},
+      toggleDogSearch: () => {},
+    }
+
+  }
+  
   render() {
+    const contextValue = {
+      cats: this.context.cats,
+      dogs: this.context.dogs,
+      adopted: this.context.adopted,
+      taken: this.context.taken,
+      toggleCatSearch: this.context.toggleCatSearch,
+      toggleDogSearch: this.context.toggleDogSearch
+    
+    }
+
+
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      <AdoptionContext.Provider value={contextValue}>
+      <div>
+        <div className="App">
+          <header className="App-header">
+           <h1>Welcome to Petful</h1>
+          </header>
+        </div>
+        <div className="content">
+        <Route 
+        exact path='/'
+        component={HomePage}/>
+        <Route 
+        path='/search'
+        component={AdoptionSearch}/>
+        </div>
       </div>
+      </AdoptionContext.Provider>
+
     );
   }
 }
