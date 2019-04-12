@@ -44,26 +44,9 @@ class Queue {
 }
 
 
-function peek(queue) {
-  return queue.first;
-}
-
-function isEmpty(queue) {
-  return queue.first && queue.last ? true : false;
-}
-
-function display(queue) {
-  let temp = [];
-  while (queue.first !== null) {
-    temp.push(queue.dequeue());
-  }
-  for (let i = 0; i < temp.length; i++) {
-    queue.enqueue(temp[i]);
-  }
-  return temp;
-}
 
 
 
-export default Queue, {peek, isEmpty, display};
+
+export default Queue;
 

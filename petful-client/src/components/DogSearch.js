@@ -27,7 +27,7 @@ class DogSearch extends Component {
     };
 
     dogsToQueue(dogs) {
-        let dogQueue = new Queue;
+        let dogQueue = new Queue();
         for (let i = 0; i < dogs.length; i++) {
             dogQueue.enqueue(dogs[i]);
         }
@@ -56,14 +56,19 @@ class DogSearch extends Component {
         }
 
 
-        console.log(this.state.dogQueue)
-
         function displaysDogs(q) {
             let currNode = q.first;
-            let html = ''
+            let html = []
             console.log(currNode)
-            while (currNode.next !== null) {
-                html += `<li>${currNode.data} </li>`
+            while (currNode !== undefined) {
+            html.push(
+            <li key={currNode.data.id}>
+                <img src={currNode.data.imageURL} alt="dog-pic"/>
+                <p>{currNode.data.breed}</p>
+                <p>{currNode.data.story}</p>
+            
+            </li>
+            )
                 currNode = currNode.next
             }
             return html;
@@ -71,7 +76,7 @@ class DogSearch extends Component {
         return (
             <div className={`dog-results ${this.props.toggle ? 'hidden' : ''}`}>
                 <ul>
-                    {/* {this.state.dogQueue && displaysDogs(this.state.dogQueue)} */}
+                    {peek(this.state.dogQueue) && displaysDogs(this.state.dogQueue)}
                 </ul>
             </div>
         )
