@@ -58,22 +58,51 @@ class DogSearch extends Component {
         function displaysDogs(q) {
             let currNode = q.first;
             let html = []
-            console.log(currNode)
             while (currNode !== undefined) {
-            html.push(
-            <li key={currNode.data.id}>
-                <img src={currNode.data.imageURL} alt="dog-pic"/>
-                <p>{currNode.data.name}</p>
-                <p>{currNode.data.breed}</p>
-                <p>{currNode.data.story}</p>
-            </li>
-            )
+                 
+                    html.push(
+                        <li key={currNode.data.id}>
+                            <img src={currNode.data.imageURL} alt="dog-pic" />
+                            <p>{currNode.data.name}</p>
+                            <p>{currNode.data.breed}</p>
+                            <p>{currNode.data.story}</p>
+                            <p>{currNode.data.adopted}</p>
+                        </li>
+                    )
+                
+
                 currNode = currNode.next
             }
             return html;
         }
+
+        function adoptedDog(q) {
+            let currNode = q.first;
+            let html = []
+
+            while (currNode !== undefined) {
+                if (!currNode.data.adopted) {
+                    return(
+                        <li key={currNode.data.id}>
+                            <img src={currNode.data.imageURL} alt="dog-pic" />
+                            <p>{currNode.data.name}</p>
+                            <p>{currNode.data.breed}</p>
+                            <p>{currNode.data.story}</p>
+                            <p>{currNode.data.adopted}</p>
+                            <button value={currNode.data.id}>Adopt</button>
+                        </li>
+                    )
+                }
+
+                currNode = currNode.next
+            }
+            return ;
+
+
+        }
         return (
             <div className={`dog-results ${this.props.toggle ? 'hidden' : ''}`}>
+            {peek(this.state.dogQueue) && adoptedDog(this.state.dogQueue)}
                 <ul>
                     {peek(this.state.dogQueue) && displaysDogs(this.state.dogQueue)}
                 </ul>
