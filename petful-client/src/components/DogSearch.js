@@ -23,7 +23,6 @@ class DogSearch extends Component {
                     dogQueue: this.dogsToQueue(dogs)
                 })
             })
-
     };
 
     dogsToQueue(dogs) {
@@ -64,9 +63,9 @@ class DogSearch extends Component {
             html.push(
             <li key={currNode.data.id}>
                 <img src={currNode.data.imageURL} alt="dog-pic"/>
+                <p>{currNode.data.name}</p>
                 <p>{currNode.data.breed}</p>
                 <p>{currNode.data.story}</p>
-            
             </li>
             )
                 currNode = currNode.next
