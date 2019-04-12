@@ -1,10 +1,8 @@
-'use strict';
-
+// Creates a node containing the data and a reference to the next item
 class _Node {
-  constructor(data, next, prev) {
+  constructor(data, next) {
     this.data = data;
     this.next = next;
-
   }
 }
 
@@ -13,7 +11,6 @@ class Queue {
     this.first = null;
     this.last = null;
   }
-
   enqueue(data) {
     const node = new _Node(data);
 
@@ -43,27 +40,4 @@ class Queue {
   }
 }
 
-
-function peek(queue) {
-  return queue.first;
-}
-
-function isEmpty(queue) {
-  return queue.first && queue.last ? true : false;
-}
-
-function display(queue) {
-  let temp = [];
-  while (queue.first !== null) {
-    temp.push(queue.dequeue());
-  }
-  for (let i = 0; i < temp.length; i++) {
-    queue.enqueue(temp[i]);
-  }
-  return temp;
-}
-
-
-
-export default Queue, {peek, isEmpty, display};
-
+export default Queue;
