@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-
+import config from '../config';
 import './DogSearch.css'
-import Queue from '../helpers/PetQueue';
 
 
 class DogSearch extends Component {
@@ -10,166 +9,82 @@ class DogSearch extends Component {
         super(props)
         this.state = {
             dogs: [],
-            dogQueue: ''
+            users: [],
+            adopter: ''
         }
-        this.handleAdopt = this.handleAdopt.bind(this)
     }
-
-   
 
     componentDidMount() {
-        fetch(`http://localhost:8000/api/dogs`)
-            .then(res => res.json())
+        fetch(`${config.API_ENDPOINT}/api/dogs`)
+            .then(res => {
+                if (!res.ok)
+                    throw new Error(res.message)
+                return res.json()
+            })
             .then(dogs => {
                 this.setState({
-                    dogs: dogs,
-                    dogQueue: this.dogsToQueue(dogs)
+                    dogs: dogs
                 })
             })
+            .catch(err => console.error(err.message))
     };
-    
-    handleAdopt = (e) =>{
-        console.log(e)
-    }
 
-
-    dogsToQueue(dogs) {
-        let dogQueue = new Queue();
-        for (let i = 0; i < dogs.length; i++) {
-            dogQueue.enqueue(dogs[i]);
-        }
-        return dogQueue;
-    }
-
-    adoptedDog(q) {
-        let currNode = q.first;
-
-        while (currNode !== undefined) {
-            if (!currNode.data.adopted) {
-                return(
-                    <li key={currNode.data.id}>
-                        <img src={currNode.data.imageURL} alt="dog-pic" />
-                        <p>{currNode.data.name}</p>
-                        <p>{currNode.data.breed}</p>
-                        <p>{currNode.data.story}</p>
-                        <p>{currNode.data.adopted}</p>
-                        <button 
-                        value={currNode.data.id} 
-                        onClick={(e) => this.handleAdopt(e.target.value)}
-                        >
-                        Adopt
-                        </button>
-                    </li>
-                )
-            }
-
-            currNode = currNode.next
-        }
-        return ;
-
+    async handleAdopt(e) {
+        const options = {
+            method: 'DELETE'
+          }
+            const response = await fetch(`${config.API_ENDPOINT}/api/dogs`, options)
+            const response1 = await fetch(`${config.API_ENDPOINT}/api/users`)
+            const response2 = await fetch(`${config.API_ENDPOINT}/api/dogs`)
+            const json = await response.json()
+            const json2 = await response2.json()
+            const json1 = await response1.json()
+            this.props.user(json1)
+            this.setState({
+              adopter: json,
+              dogs: json2
+            })
 
     }
 
-    /*
-                    {peek(this.state.dogQueue) && displaysDogs(this.state.dogQueue)}
-                    {peek(this.state.dogQueue) && this.adoptedDog(this.state.dogQueue)}
-
-                     function displaysDogs(q) {
-            let currNode = q.first;
-            let html = []
-            while (currNode !== undefined) {
-                 
-                    html.push(
-                        <li key={currNode.data.id}>
-                            <img src={currNode.data.imageURL} alt="dog-pic" />
-                            <p>{currNode.data.name}</p>
-                            <p>{currNode.data.breed}</p>
-                            <p>{currNode.data.story}</p>
-                            <p>{currNode.data.adopted}</p>
-                        </li>
-                    )
-                
-
-                currNode = currNode.next
-            }
-            return html;
+    firstDog(arr) {
+        if (arr.length > 0) {
+            return (
+                <li key={arr[0].id}>
+                    <img src={arr[0].imageURL} alt={arr[0].imageDescription} />
+                    <div><strong>Name:</strong>  {arr[0].name}</div>
+                    <div><strong>Breed:</strong>  {arr[0].breed}</div>
+                    <div><strong>Sex:</strong>   {arr[0].sex}</div>
+                    <div><strong>Age:</strong>   {arr[0].age}</div>
+                    <div><strong>Story:</strong> {arr[0].story}</div>
+                    <button className='adoption-button' onClick={() => this.handleAdopt()}>Adopt me!</button>
+                </li>
+            );
         }
+    }
 
-
-
-    */
-
-    
     render() {
 
-        const dogList = this.state.dogs.map(dog => {
-            if(!dog.adopted){
-                return(
-                
-                    <li key={dog.id}>
-                                <img src={dog.imageURL} alt="dog-pic" />
-                                <p>{dog.name}</p>
-                                <p>{dog.breed}</p>
-                                <p>{dog.story}</p>
-                                
-                                <button value={dog.id} >Adopt</button>
-                    </li>           
-                )
-            } else {
-                return(
-                
-                    <li key={dog.id}>
-                                <img src={dog.imageURL} alt="dog-pic" />
-                                <p>{dog.name}</p>
-                                <p>{dog.breed}</p>
-                                <p>{dog.story}</p>
-                                <p>{dog.adopted}</p>
-                                
-                    </li>           
-                )
-            }
-        })
-
-        console.log(dogList);
-
-        // const availableDog = this.state.dogs.map(dog => {
-        //     while(dog.ad)
-        // })
-
-        function peek(queue) {
-            return queue.first;
+        function displayDogs(arr) {
+            const data = arr.map(i => {
+                return (
+                    <li key={i.id}>
+                        <img className='cannot' src={i.imageURL} alt={i.imageDescription} />
+                    </li>
+                );
+            })
+            return data
         }
 
-        function isEmpty(queue) {
-            return queue.first && queue.last ? true : false;
-        }
-
-        function display(queue) {
-            let temp = [];
-            while (queue.first !== null) {
-                temp.push(queue.dequeue());
-            }
-            for (let i = 0; i < temp.length; i++) {
-                queue.enqueue(temp[i]);
-            }
-            return temp;
-        }
-
-
-        
-
-        
-
-       
         return (
             <div className={`dog-results ${this.props.toggle ? 'hidden' : ''}`}>
-               <div className='dog-in-queue'>
-
-               </div>
-           
+                <div className='dog-in-queue'>
+                </div>
                 <ul>
-                
-                    {dogList}
+                    {this.state.dogs.length > 0 && this.firstDog(this.state.dogs)}
+                </ul>
+                <ul className='other-dogs'>
+                    {this.state.dogs.length > 0 ? displayDogs(this.state.dogs) : <h3>There are no more dogs to adopt</h3>}
                 </ul>
             </div>
         )

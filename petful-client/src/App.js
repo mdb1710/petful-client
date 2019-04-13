@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Link } from 'react-router-dom';
 // import logo from './logo.svg';
-// import './App.css';
+import './App.css';
 
 import HomePage from './components/HomePage';
 import AdoptionSearch from './components/AdoptionSearch';
 import AdoptionContext from './adoption-context/AdoptionContext';
+import AdoptedAnimals from './components/AdoptedAnimals';
 
 class App extends Component {
 
@@ -39,7 +40,7 @@ class App extends Component {
       <div>
         <div className="App">
           <header className="App-header">
-           <h1>Welcome to Petful</h1>
+           <Link to='/'><h1 className='header-link'>Welcome to Petful</h1></Link>
           </header>
         </div>
         <div className="content">
@@ -49,6 +50,10 @@ class App extends Component {
         <Route 
         path='/search'
         component={AdoptionSearch}/>
+        <Route 
+        exact path='/adopted'
+        component={AdoptedAnimals} />
+        
         </div>
       </div>
       </AdoptionContext.Provider>

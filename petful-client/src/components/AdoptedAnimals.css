@@ -1,0 +1,22 @@
+.adopted-animal-pic {
+  width: 400px;
+  height: 300px;
+  padding: 1%;
+}
+
+.adopted-dog-cat {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  
+}
+
+
+@media only screen and (min-width: 700px) {
+  .adopted-dog-cat {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}

@@ -1,3 +1,20 @@
 .hidden{
   display: none;
 }
+
+img {
+  width: 400px;
+  height: 300px;
+}
+
+.cannot{
+  width: 100px;
+  height: 100px;
+}
+
+.other-dogs {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+}

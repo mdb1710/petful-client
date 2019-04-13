@@ -1,0 +1,18 @@
+.landing-page {
+  display: flex;
+   flex-direction: column; 
+  text-align: center;
+  font-size: 16px;
+}
+
+.landing-button{
+  height: 30px;
+  width: 25%;
+  font-size: 14px;
+}
+
+.landing-content {
+  padding: 1%;
+  margin-left: 2%;
+  margin-right: 2%;
+}

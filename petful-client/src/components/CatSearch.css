@@ -1,3 +1,20 @@
 .hidden{
   display: none;
 }
+
+ul {
+  list-style-type: none;
+  padding-inline-start: 0px;
+}
+
+.other-cats{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media only screen and (min-width: 600px) {
+  .cat-results {
+    margin-left: 1%;
+  }
+}

@@ -1,0 +1,36 @@
+.adoption-page {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+}
+
+.adoption-button{
+  height: 30px;
+  font-size: 14px;
+  margin: 1%;
+  width: 48%;  
+}
+
+.adoption-button-link{
+  height: 30px;
+  font-size: 14px;
+  margin: 1%;
+}
+
+.search-results {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.adoption-link{
+  color:black
+}
+
+@media only screen and (min-width: 600px) {
+  .search-results {
+    flex-direction: row;
+    padding: 1%;
+  }
+}
