@@ -2,9 +2,9 @@
 
 Application was made by Matthew Nguyen and Michael Bonner
 
-[Demo](matt-michael-petful.matth3wn.now.sh)  
-[Client Repo](https://github.com/thinkful-ei-armadillo/petful-client-matt-michael)  
-[Server Repo](https://github.com/thinkful-ei-armadillo/petful-server-matt-michael)
+Demo: matt-michael-petful.matth3wn.now.sh
+Client Repo: https://github.com/thinkful-ei-armadillo/petful-client-matt-michael
+Server Repo: https://github.com/thinkful-ei-armadillo/petful-server-matt-michael
 
 **Summary**    
 
